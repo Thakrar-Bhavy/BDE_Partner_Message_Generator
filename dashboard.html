@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Outreach Generator - Levox Infotech</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-page="dashboard">
+    <div id="appSection" class="container app-shell active">
+        <div class="header">
+            <div class="header-copy">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div
+                        style="width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); display:flex; align-items:center; justify-content:center; color:white; font-size:1.2rem; font-weight:bold; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);">
+                        ⚡</div>
+                    <div>
+                        <h1 style="font-size:1.2rem; margin:0; line-height:1.2;">Levox Infotech</h1>
+                        <span
+                            style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; font-weight:600;">Outreach
+                            Workspace</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="user-greeting" id="userGreeting">Hi, User</div>
+                <button class="btn btn-secondary theme-toggle" id="themeToggle" type="button"
+                    style="width: auto;">Theme</button>
+                <button class="btn btn-secondary theme-toggle" id="logoutBtn" type="button"
+                    style="width: auto;">Logout</button>
+            </div>
+        </div>
+
+        <div class="section-stack">
+            <div id="inputSelectionSection" class="card section-shell active transition">
+                <h2>How would you like to add prospect details?</h2>
+                <p class="section-subtext">Choose the workflow that matches the data you already have and keep the rest
+                    of the workspace clean.</p>
+                <div class="selection-grid">
+                    <button class="option-card" type="button" onclick="handleModeSelection('manual')">
+                        <h3>Manual Entry</h3>
+                        <p>Enter role, company, and growth context yourself when you want tighter control over the
+                            personalization.</p>
+                    </button>
+                    <button class="option-card" type="button" onclick="handleModeSelection('fullProfile')">
+                        <h3>Paste Full Profile</h3>
+                        <p>Paste raw LinkedIn profile text and let the generator build personalized outreach directly
+                            from the source details.</p>
+                    </button>
+                </div>
+            </div>
+
+            <div id="messageTypeSection" class="card section-shell transition message-type-card">
+                <h2>What do you want to create?</h2>
+                <p class="section-subtext">Choose your outreach channel once, then switch anytime without losing the
+                    lead information you already entered.</p>
+                <div class="message-type-selector">
+                    <button class="message-type-btn active" type="button" data-message-type="linkedin"
+                        onclick="setMessageType('linkedin')">
+                        <span class="message-type-label">&#128188; LinkedIn Message</span>
+                        <span class="message-type-note">Create a connection note plus a follow-up message for
+                            relationship-first outreach inside LinkedIn.</span>
+                    </button>
+                    <button class="message-type-btn" type="button" data-message-type="email"
+                        onclick="setMessageType('email')">
+                        <span class="message-type-label">&#128231; Email</span>
+                        <span class="message-type-note">Generate a sharp subject line and a polished email body with a
+                            clear but soft CTA.</span>
+                    </button>
+                    <button class="message-type-btn" type="button" data-message-type="whatsapp"
+                        onclick="setMessageType('whatsapp')">
+                        <span class="message-type-label">&#128172; WhatsApp Message</span>
+                        <span class="message-type-note">Keep it quick and natural with a casual message built for faster
+                            replies.</span>
+                    </button>
+                    <button class="message-type-btn" type="button" data-message-type="coldcall"
+                        onclick="setMessageType('coldcall')">
+                        <span class="message-type-label">📞 Cold Call Script</span>
+                        <span class="message-type-note">Get a full call script with opening, pitch, objection handling,
+                            and closing to book meetings.</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="manualFormSection" class="hidden transition section-shell">
+                <div class="main-content">
+                    <div class="card">
+                        <div class="section-header">
+                            <h2>Manual Entry</h2>
+                            <button class="btn btn-secondary back-btn" type="button"
+                                onclick="handleModeSelection('selection')">Back</button>
+                        </div>
+                        <p class="section-subtext">Add the prospect information manually when you want precise control
+                            over the personalization inputs.</p>
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="prospectName" placeholder="e.g., John Smith">
+                        </div>
+                        <div class="form-group">
+                            <label>Job Title *</label>
+                            <input type="text" id="prospectTitle" placeholder="e.g., CEO, Founder, VP Sales">
+                        </div>
+                        <div class="form-group">
+                            <label>Company Name *</label>
+                            <input type="text" id="prospectCompany" placeholder="e.g., GreenTech Solutions">
+                        </div>
+                        <div class="form-group">
+                            <label>Industry</label>
+                            <input type="text" id="prospectIndustry"
+                                placeholder="e.g., SaaS, E-commerce, Sustainability">
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" id="prospectLocation" placeholder="e.g., San Francisco, CA">
+                        </div>
+                        <div class="form-group">
+                            <label>Company Size</label>
+                            <select id="companySize">
+                                <option value="">Select size</option>
+                                <option value="1-10">1-10 employees</option>
+                                <option value="11-50">11-50 employees</option>
+                                <option value="51-200">51-200 employees</option>
+                                <option value="201-500">201-500 employees</option>
+                                <option value="501-1000">501-1000 employees</option>
+                                <option value="1000+">1000+ employees</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Additional Context</h2>
+                        <p class="section-subtext">Use recent activity and visible pain points to sharpen the
+                            personalization.</p>
+                        <div class="form-group">
+                            <label>Recent Activity / Posts</label>
+                            <textarea id="recentActivity"
+                                placeholder="e.g., Posted about rebranding, new launch, growth goals, website revamp, content push, expansion..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Pain Points (if visible)</label>
+                            <textarea id="painPoints"
+                                placeholder="e.g., weak website conversion, inconsistent branding, low visibility, inactive socials, outdated UX..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Website Status</label>
+                            <select id="websiteStatus">
+                                <option value="unknown">Unknown</option>
+                                <option value="yes">Has website</option>
+                                <option value="no">No website</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Social Activity</label>
+                            <select id="socialActivity">
+                                <option value="unknown">Unknown</option>
+                                <option value="low">Low / inconsistent</option>
+                                <option value="good">Good / active</option>
+                                <option value="strong">Strong / scaling-ready</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Service Focus</label>
+                            <select id="serviceFocus">
+                                <option value="website">Website & UX</option>
+                                <option value="branding">Brand Identity</option>
+                                <option value="seo">SEO & Growth</option>
+                                <option value="social">Social Media & Content</option>
+                                <option value="ecommerce">E-commerce Optimization</option>
+                                <option value="automation">AI Automation</option>
+                                <option value="general">Best-fit Recommendation</option>
+                            </select>
+                        </div>
+                        <div class="form-group strategy-input-wrapper">
+                            <label class="strategy-label">🧠 Custom Strategy (Optional)</label>
+                            <textarea id="customStrategyManual"
+                                placeholder="Add your own outreach angle or strategy here. Example: Focus on their recent funding round, mention competitor gap, highlight specific ROI numbers..."></textarea>
+                            <div class="strategy-hint">Your strategy will be combined with Levox's approach. Your input
+                                takes priority.</div>
+                        </div>
+
+                        <div id="linkedinSubTypeManual" class="linkedin-subtype-section hidden">
+                            <label>What do you want to create?</label>
+                            <div class="linkedin-subtype-selector">
+                                <button class="linkedin-subtype-btn active" type="button" data-subtype="first_message"
+                                    onclick="setLinkedinSubType('first_message', 'manual')">
+                                    <span class="subtype-icon">💬</span>
+                                    <span class="subtype-label">First Message</span>
+                                    <span class="subtype-desc">First meaningful outreach after connecting</span>
+                                </button>
+                                <button class="linkedin-subtype-btn" type="button" data-subtype="connection_only"
+                                    onclick="setLinkedinSubType('connection_only', 'manual')">
+                                    <span class="subtype-icon">🤝</span>
+                                    <span class="subtype-label">Connection Note</span>
+                                    <span class="subtype-desc">Short, friendly note (max 280 chars)</span>
+                                </button>
+                                <button class="linkedin-subtype-btn" type="button" data-subtype="followup_reply"
+                                    onclick="setLinkedinSubType('followup_reply', 'manual')">
+                                    <span class="subtype-icon">🔄</span>
+                                    <span class="subtype-label">Follow-up Message</span>
+                                    <span class="subtype-desc">Continue an existing conversation</span>
+                                </button>
+                            </div>
+                            <div id="prevConvoWrapperManual" class="prev-convo-wrapper hidden">
+                                <label>Paste previous conversation</label>
+                                <textarea id="previousConversationManual"
+                                    placeholder="Paste your previous LinkedIn conversation here so the AI can understand context and continue naturally..."></textarea>
+                            </div>
+                        </div>
+
+                        <button class="btn" id="generateBtn" style="padding-left: 20px;">Generate</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="fullProfileSection" class="hidden transition section-shell">
+                <div class="card">
+                    <div class="section-header">
+                        <h2>Paste Full Profile</h2>
+                        <button class="btn btn-secondary back-btn" type="button"
+                            onclick="handleModeSelection('selection')">Back</button>
+                    </div>
+                    <div class="feature-note">
+                        Paste the full raw LinkedIn profile below to generate outreach in one step. The profile text is
+                        sent directly to AI for personalization.
+                    </div>
+                    <div class="form-group">
+                        <label>Paste Full LinkedIn Profile</label>
+                        <textarea id="fullLinkedinProfile"
+                            placeholder="Paste the full LinkedIn profile raw text here. The generator will analyze it and build Levox-style outreach without manual field mapping."
+                            style="min-height: 180px;"></textarea>
+                    </div>
+                    <div class="form-group strategy-input-wrapper">
+                        <label class="strategy-label">🧠 Custom Strategy (Optional)</label>
+                        <textarea id="customStrategyProfile"
+                            placeholder="Add your own outreach angle or strategy here. Example: Focus on their recent funding round, mention competitor gap, highlight specific ROI numbers..."></textarea>
+                        <div class="strategy-hint">Your strategy will be combined with Levox's approach. Your input
+                            takes priority.</div>
+                    </div>
+
+                    <div id="linkedinSubTypeProfile" class="linkedin-subtype-section hidden">
+                        <label>What do you want to create?</label>
+                        <div class="linkedin-subtype-selector">
+                            <button class="linkedin-subtype-btn active" type="button" data-subtype="first_message"
+                                onclick="setLinkedinSubType('first_message', 'profile')">
+                                <span class="subtype-icon">💬</span>
+                                <span class="subtype-label">First Message</span>
+                                <span class="subtype-desc">First meaningful outreach after connecting</span>
+                            </button>
+                            <button class="linkedin-subtype-btn" type="button" data-subtype="connection_only"
+                                onclick="setLinkedinSubType('connection_only', 'profile')">
+                                <span class="subtype-icon">🤝</span>
+                                <span class="subtype-label">Connection Note</span>
+                                <span class="subtype-desc">Short, friendly note (max 280 chars)</span>
+                            </button>
+                            <button class="linkedin-subtype-btn" type="button" data-subtype="followup_reply"
+                                onclick="setLinkedinSubType('followup_reply', 'profile')">
+                                <span class="subtype-icon">🔄</span>
+                                <span class="subtype-label">Follow-up Message</span>
+                                <span class="subtype-desc">Continue an existing conversation</span>
+                            </button>
+                        </div>
+                        <div id="prevConvoWrapperProfile" class="prev-convo-wrapper hidden">
+                            <label>Paste previous conversation</label>
+                            <textarea id="previousConversationProfile"
+                                placeholder="Paste your previous LinkedIn conversation here so the AI can understand context and continue naturally..."></textarea>
+                        </div>
+                    </div>
+
+                    <button class="btn" id="generateFromProfileBtn">Generate</button>
+                </div>
+            </div>
+
+            <div id="outputAndTipsSection" class="hidden transition section-shell">
+                <div class="output-section">
+                    <div id="loadingBox" class="card hidden">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+
+                    <div id="errorBox" class="card hidden">
+                        <div class="error-box">
+                            <strong>Error:</strong> <span id="errorMessage"></span>
+                        </div>
+                    </div>
+
+                    <div id="outputContainer"></div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- Premium Footer -->
+        <div
+            style="text-align:center; padding:30px 0 10px; color:var(--text-secondary); font-size:0.85rem; border-top:1px solid var(--card-border); margin-top:40px;">
+            <p>Powered by <strong>BDE Partners</strong> &copy; 2026 — Premium Digital Solutions & Outreach Command
+                Center.</p>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="Linkedin_message_ai.js"></script>
+    <script src="mail_gunrator_ai.js"></script>
+    <script src="whatsapp_message_ai.js"></script>
+    <script src="cold_calling_script_ai.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
