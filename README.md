@@ -1,2 +1,0 @@
-# BDE_Partner_Message_Generator
-generate persnalize messages
